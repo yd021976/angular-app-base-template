@@ -23,7 +23,7 @@ RUN npm config set prefix '~/.npm-global'
 # Update path with npm global binaries
 ENV PATH="~/.npm-global/bin:${PATH}"
 # Solve/workaround node V>14.x bug with SSL (@see https://exerror.com/error-error0308010cdigital-envelope-routinesunsupported-in-webpack/)
-ENV NODE_OPTIONS=--openssl-legacy-provider
+#ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Install Vue.js CLI
 RUN npm install -g @vue/cli
