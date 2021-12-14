@@ -1,7 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "./web-client"
+			"path": ".",
+		},
+		{
+			"path": "web-client",
 		}
 	]
 }
