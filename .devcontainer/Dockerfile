@@ -19,7 +19,8 @@ COPY default /etc/nginx/sites-available/default
 USER vscode
 RUN mkdir ~/.npm-global
 RUN npm config set prefix '~/.npm-global'
-RUN export PATH=~/.npm-global/bin:$PATH
+# RUN export PATH=~/.npm-global/bin:$PATH
+ENV PATH="~/.npm-global/bin:${PATH}"
 
 # Install Vue.js CLI
 RUN npm install -g @vue/cli
