@@ -9,9 +9,9 @@
             "request": "launch",
             "name": "vuejs: chrome",
             "url": "http://localhost:8083",
-            "webRoot": "${workspaceFolder}/web-client",
+            "webRoot": "${workspaceFolder}",
             "pathMapping": {
-                "/_karma_webpack_": "${workspaceFolder}/web-client"
+                "/_karma_webpack_": "${workspaceFolder}"
             },
             "sourceMapPathOverrides": {
                 "webpack:/*": "${webRoot}/*",
