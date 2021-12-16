@@ -1,8 +1,8 @@
 export var loginModel = Backbone.Model.extend({
-    userName: "",
+    userName: "titi",
     token: null,
 
-    initialize: () => {
+    initialize: function() {
         this.userName = ""
         this.token = null
     }

@@ -14,7 +14,7 @@ var AppView = Backbone.View.extend({
 
     //Like the Hello TutorialsPoint in this case.
     render: function () {
-        this.$el.html("Hello TutorialsPoint!!!");
+        this.$el.html(`Hello, you are ${this.loginModel.userName}`);
     }
 });
 
