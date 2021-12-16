@@ -27,4 +27,4 @@ ENV PATH="~/.npm-global/bin:${PATH}"
 
 # Install Vue.js CLI
 # RUN npm install -g @vue/cli
-
+RUN npm install -g ampersand
