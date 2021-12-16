@@ -26,5 +26,5 @@ ENV PATH="~/.npm-global/bin:${PATH}"
 #ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Install Vue.js CLI
-RUN npm install -g @vue/cli
+# RUN npm install -g @vue/cli
 

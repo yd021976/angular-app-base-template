@@ -7,7 +7,9 @@
 		"nginx-web-server",
 		"--network=servers_default",
 		"-p",
-		"8082:8082"
+		"8082:8082",
+		"-p",
+		"8083"
 	],
 	"build": {
 		"dockerfile": "Dockerfile",
