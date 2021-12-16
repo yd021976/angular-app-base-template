@@ -1,5 +1,5 @@
 export const loginModel = Backbone.Model.extend({
-    initialize() {
+    initialize: function() {
         this.set("userName", "toto")
         this.set("token", "")
     }
