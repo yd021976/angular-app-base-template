@@ -1,9 +1,6 @@
-export var loginModel = Backbone.Model.extend({
-    userName: "titi",
-    token: null,
-
-    initialize: function() {
-        this.userName = ""
-        this.token = null
+export const loginModel = Backbone.Model.extend({
+    initialize() {
+        this.set("userName", "toto")
+        this.set("token", "")
     }
-})
+});

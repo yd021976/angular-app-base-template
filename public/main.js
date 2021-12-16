@@ -1,12 +1,14 @@
 import { loginModel } from './models/login.js'
+import { loginView } from './views/login.view.js';
 
-var AppView = Backbone.View.extend({
+const mainAppView = Backbone.View.extend({
     // el - stands for element. Every view has an element associated with HTML content, will be rendered. 
-    el: '#app',
+    el: "#app",
 
     // It's the first function called when this view is instantiated.
     initialize: function () {
         this.login = new loginModel()
+        this.loginView = new loginView()
         this.render();
     },
 
@@ -14,7 +16,7 @@ var AppView = Backbone.View.extend({
 
     //Like the Hello TutorialsPoint in this case.
     render: function () {
-        this.$el.html(`Hello, you are ${this.loginModel.userName}`);
+        this.$el.html(`Hello, you are ${this.login.get('userName')}`);
     }
 });
 
@@ -22,4 +24,4 @@ var AppView = Backbone.View.extend({
 /**
  * Start the main app
  */
-var appView = new AppView();
+var appView = new mainAppView();
