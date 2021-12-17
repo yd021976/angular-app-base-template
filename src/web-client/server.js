@@ -42,7 +42,7 @@ if (!config.isDev) {
 app.use(helmet.xssFilter());
 app.use(helmet.nosniff());
 
-app.set('view engine', 'jade');
+// app.set('view engine', 'jade');
 
 
 // -----------------
@@ -81,8 +81,8 @@ app.use(function (req, res, next) {
 // ---------------------------------------------------
 new Moonboots({
     moonboots: {
-        jsFileName: 'my-amazing-app',
-        cssFileName: 'my-amazing-app',
+        jsFileName: 'nestjs-web-client',
+        cssFileName: 'nestjs-web-client',
         main: fixPath('client/app.js'),
         developmentMode: config.isDev,
         libraries: [
@@ -94,6 +94,7 @@ new Moonboots({
         browserify: {
             debug: config.isDev
         },
+        buildDirectory:'./build',
         beforeBuildJS: function () {
             // This re-builds our template files from jade each time the app's main
             // js file is requested. Which means you can seamlessly change jade and
