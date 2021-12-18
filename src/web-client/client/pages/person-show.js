@@ -1,13 +1,13 @@
 /*global alert*/
 var app = require('ampersand-app');
 var PageView = require('./base');
-var templates = require('../templates');
+ 
 var PersonForm = require('../forms/person');
 
 
 module.exports = PageView.extend({
     pageTitle: 'view person',
-    template: templates.pages.personView,
+    template: require('../../templates/pages/personView.jade'),
     bindings: {
         'model.fullName': {
             hook: 'name'

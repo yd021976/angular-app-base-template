@@ -8,11 +8,11 @@ var ViewSwitcher = require('ampersand-view-switcher');
 var _ = require('lodash');
 var domify = require('domify');
 var localLinks = require('local-links');
-var templates = require('../templates');
 
 
 module.exports = View.extend({
-    template: templates.body,
+    template: require('../../templates/body.jade'),
+    headerTpl : require('../../templates/head.jade'), // Header template
     autoRender: true,
     initialize: function () {
         // this marks the correct nav item selected
@@ -23,7 +23,9 @@ module.exports = View.extend({
     },
     render: function () {
         // some additional stuff we want to add to the document head
-        document.head.appendChild(domify(templates.head()));
+        // document.head.appendChild(domify(templates.head()));
+        // const header = 
+        document.head.appendChild(domify(this.headerTpl()));
 
         // main renderer
         this.renderWithTemplate(this);
@@ -32,7 +34,7 @@ module.exports = View.extend({
         this.pageSwitcher = new ViewSwitcher(this.queryByHook('page-container'), {
             show: function (newView, oldView) {
                 // it's inserted and rendered for me
-                document.title = _.result(newView, 'pageTitle') || 'My Amazing App';
+                document.title = _.result(newView, 'pageTitle') || 'web-client-app';
                 document.scrollTop = 0;
 
                 // add a class specifying it's active

@@ -12,6 +12,7 @@ var serveStatic = require('serve-static');
 var stylizer = require('stylizer');
 var templatizer = require('templatizer');
 var app = express();
+var jadeify = require("jadeify");
 
 // a little helper for fixing paths for various environments
 var fixPath = function (pathString) {
@@ -42,7 +43,7 @@ if (!config.isDev) {
 app.use(helmet.xssFilter());
 app.use(helmet.nosniff());
 
-// app.set('view engine', 'jade');
+app.set('view engine', 'jade');
 
 
 // -----------------
@@ -81,27 +82,30 @@ app.use(function (req, res, next) {
 // ---------------------------------------------------
 new Moonboots({
     moonboots: {
-        jsFileName: 'nestjs-web-client',
-        cssFileName: 'nestjs-web-client',
+        jsFileName: 'web-client-app-js',
+        cssFileName: 'web-client-app-css',
         main: fixPath('client/app.js'),
+        buildDirectory: fixPath('build/dist'),
         developmentMode: config.isDev,
         libraries: [
         ],
         stylesheets: [
             fixPath('stylesheets/bootstrap.css'),
-            fixPath('stylesheets/app.css')
+            // fixPath('stylesheets/app.css')
+            fixPath('build/dist/app.css')
         ],
         browserify: {
-            debug: config.isDev
+            debug: config.isDev,
+            transform: [jadeify]
         },
-        buildDirectory:'./build',
         beforeBuildJS: function () {
             // This re-builds our template files from jade each time the app's main
             // js file is requested. Which means you can seamlessly change jade and
             // refresh in your browser to get new templates.
-            if (config.isDev) {
-                templatizer(fixPath('templates'), fixPath('client/templates.js'));
-            }
+            // if (config.isDev) {
+            //     // templatizer(fixPath('templates'), fixPath('client/templates.js'));
+            //     templatizer(fixPath('templates'), fixPath('build/templates.js'));
+            // }
         },
         beforeBuildCSS: function (done) {
             // This re-builds css from stylus each time the app's main
@@ -110,7 +114,8 @@ new Moonboots({
             if (config.isDev) {
                 stylizer({
                     infile: fixPath('stylesheets/app.styl'),
-                    outfile: fixPath('stylesheets/app.css'),
+                    // outfile: fixPath('stylesheets/app.css'),
+                    outfile: fixPath('build/dist/app.css'),
                     development: true
                 }, done);
             } else {
@@ -124,4 +129,4 @@ new Moonboots({
 
 // listen for incoming http requests on the port as specified in our config
 app.listen(config.http.port);
-console.log('My Amazing App is running at: http://localhost:' + config.http.port + ' Yep. That\'s pretty awesome.');
+console.log('web-client-app is running at: http://localhost:' + config.http.port + ' Yep. That\'s pretty awesome.');

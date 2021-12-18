@@ -1,8 +1,9 @@
 var FormView = require('ampersand-form-view');
 var InputView = require('ampersand-input-view');
-var templates = require('../templates');
+ 
 var ExtendedInput = InputView.extend({
-    template: templates.includes.formInput()
+    template: require('../../templates/includes/formInput.jade')
+    // template: templates.includes.formInput()
 });
 
 module.exports = FormView.extend({

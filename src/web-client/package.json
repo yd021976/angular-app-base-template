@@ -33,7 +33,10 @@
     "stylizer": "^2.1.0",
     "templatizer": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "jadeify": "^4.7.0"
+  },
   "jshintConfig": {
     "asi": false,
     "browser": true,
