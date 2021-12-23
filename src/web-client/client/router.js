@@ -6,6 +6,7 @@ var InfoPage = require('./pages/info');
 var PersonAddPage = require('./pages/person-add');
 var PersonEditPage = require('./pages/person-edit');
 var PersonShowPage = require('./pages/person-show');
+var LoginPage = require('./pages/login');
 
 
 module.exports = Router.extend({
@@ -16,6 +17,8 @@ module.exports = Router.extend({
         'person/add': 'personAdd',
         'person/:id': 'personView',
         'person/:id/edit': 'personEdit',
+        /** */
+        'login': 'login',
         '(*path)': 'catchAll'
     },
 
@@ -57,5 +60,9 @@ module.exports = Router.extend({
 
     catchAll: function () {
         this.redirectTo('');
+    },
+
+    login: function () {
+        app.trigger('page', new LoginPage({ parent: app.me }))
     }
 });

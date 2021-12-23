@@ -3,7 +3,7 @@ var View = require('ampersand-view');
 
 
 module.exports = View.extend({
-    template: require('../../templates/includes/person.jade'),
+    template: require('../../templates/jade/includes/person.jade'),
     bindings: {
         'model.fullName': '[data-hook~=name]',
         'model.avatar': {

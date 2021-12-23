@@ -7,7 +7,7 @@ var PersonForm = require('../forms/person');
 
 module.exports = PageView.extend({
     pageTitle: 'view person',
-    template: require('../../templates/pages/personView.jade'),
+    template: require('../../templates/jade/pages/personView.jade'),
     bindings: {
         'model.fullName': {
             hook: 'name'

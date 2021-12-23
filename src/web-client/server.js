@@ -10,8 +10,9 @@ var config = require('getconfig');
 var semiStatic = require('semi-static');
 var serveStatic = require('serve-static');
 var stylizer = require('stylizer');
-var templatizer = require('templatizer');
 var app = express();
+
+var templatizer = require('templatizer');
 var jadeify = require("jadeify");
 
 // a little helper for fixing paths for various environments
@@ -102,10 +103,10 @@ new Moonboots({
             // This re-builds our template files from jade each time the app's main
             // js file is requested. Which means you can seamlessly change jade and
             // refresh in your browser to get new templates.
-            // if (config.isDev) {
-            //     // templatizer(fixPath('templates'), fixPath('client/templates.js'));
-            //     templatizer(fixPath('templates'), fixPath('build/templates.js'));
-            // }
+            if (config.isDev) {
+                // templatizer(fixPath('templates'), fixPath('client/templates.js'));
+                templatizer(fixPath('templates'), fixPath('build/templates.js'));
+            }
         },
         beforeBuildCSS: function (done) {
             // This re-builds css from stylus each time the app's main

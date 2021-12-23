@@ -11,8 +11,8 @@ var localLinks = require('local-links');
 
 
 module.exports = View.extend({
-    template: require('../../templates/body.jade'),
-    headerTpl : require('../../templates/head.jade'), // Header template
+    template: require('../../templates/jade/body.jade'),
+    headerTpl : require('../../templates/jade/head.jade'), // Header template
     autoRender: true,
     initialize: function () {
         // this marks the correct nav item selected

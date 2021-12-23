@@ -5,7 +5,7 @@ var PersonView = require('../views/person');
 
 module.exports = PageView.extend({
     pageTitle: 'collection demo',
-    template: require('../../templates/pages/collectionDemo.jade'),
+    template: require('../../templates/jade/pages/collectionDemo.jade'),
     events: {
         'click [data-hook~=shuffle]': 'shuffle',
         'click [data-hook~=fetch]': 'fetchCollection',

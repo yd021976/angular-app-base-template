@@ -7,7 +7,7 @@ var PersonForm = require('../forms/person');
 
 module.exports = PageView.extend({
     pageTitle: 'edit person',
-    template: require('../../templates/pages/personEdit.jade'),
+    template: require('../../templates/jade/pages/personEdit.jade'),
     initialize: function (spec) {
         var self = this;
         app.people.getOrFetch(spec.id, {all: true}, function (err, model) {

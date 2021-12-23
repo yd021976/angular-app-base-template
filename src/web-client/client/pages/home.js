@@ -4,5 +4,5 @@ var PageView = require('./base');
 
 module.exports = PageView.extend({
     pageTitle: 'home',
-    template: require("../../templates/pages/home.jade")
+    template: require("../../templates/jade/pages/home.jade")
 });

@@ -6,7 +6,7 @@ var PersonForm = require('../forms/person');
 
 module.exports = PageView.extend({
     pageTitle: 'add person',
-    template: require('../../templates/pages/personAdd.jade'),
+    template: require('../../templates/jade/pages/personAdd.jade'),
     subviews: {
         form: {
             container: 'form',
