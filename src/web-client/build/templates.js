@@ -32,8 +32,13 @@
         return '<div class="form-group"><label data-hook="label"></label><div data-hook="message-container"><div data-hook="message-text" class="alert alert-danger"></div></div><input class="form-control"/></div>';
     };
 
-    // jade/includes/login.jade compiled template
-    templatizer["jade"]["includes"]["login"] = function tmpl_jade_includes_login() {
+    // jade/includes/login/form/input.jade compiled template
+    templatizer["jade"]["includes"]["login"]["form"]["input"] = function tmpl_jade_includes_login_form_input() {
+        return '<div class="form-group"><label data-hook="label"></label><div data-hook="message-container"><div data-hook="message-text" class="alert alert-danger"></div></div><input class="form-control"/></div>';
+    };
+
+    // jade/includes/login/form.jade compiled template
+    templatizer["jade"]["includes"]["login"]["form"] = function tmpl_jade_includes_login_form() {
         return '<div class="form-group"><label data-hook="label"></label><div data-hook="message-container"><div data-hook="message-text" class="alert alert-danger"></div></div><input class="form-control"/></div>';
     };
 
@@ -59,7 +64,7 @@
 
     // jade/pages/login.jade compiled template
     templatizer["jade"]["pages"]["login"] = function tmpl_jade_pages_login() {
-        return '<div><div>Login page</div><div><form action="login"><input type="text" data-hook="username"/><input type="password" data-hook="password"/><button data-hook="loginButton"> </button></form></div></div>';
+        return '<section class="page login"><div><div>Login page</div><div><form data-hook="login-form"><fieldset data-hook="field-container"></fieldset><div class="buttons"><button data-hook="reset" type="submit" class="btn">Submit</button></div></form></div></div></section>';
     };
 
     // jade/pages/personAdd.jade compiled template
