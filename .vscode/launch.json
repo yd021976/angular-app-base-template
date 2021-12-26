@@ -16,7 +16,7 @@
             "request": "launch",
             "name": "debug angular project",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/simple-web-client/src/web-client-test-frameworks/web-client-angular",
+            "webRoot": "${workspaceFolder}",
         }
     ]
 }
