@@ -4,10 +4,10 @@
 	"name": "Webclient with Nginx",
 	"runArgs": [
 		"--name",
-		"nginx-web-server",
+		"angular-app",
 		"--network=servers_default",
 		"-p",
-		"8082:8082",
+		"4200:4200",
 	],
 	"build": {
 		"dockerfile": "Dockerfile",
@@ -21,7 +21,7 @@
 	"settings": {},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"christian-kohler.path-intellisense",
+		// "christian-kohler.path-intellisense",
 		"ducfilan.pug-formatter",
 		"angular.ng-template"
 	],
