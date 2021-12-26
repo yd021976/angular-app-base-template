@@ -5,6 +5,9 @@
     {
       "type": "npm",
       "script": "start",
+      "options": {
+        "cwd": "${workspaceFolder}/angular-app"
+      },
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
@@ -15,7 +18,7 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": "Compiled successfully"
           }
         }
       }

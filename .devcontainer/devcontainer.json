@@ -6,8 +6,8 @@
 		"--name",
 		"angular-app",
 		"--network=servers_default",
-		"-p",
-		"4200:4200",
+		// "-p",
+		// "4200:4200",
 	],
 	"build": {
 		"dockerfile": "Dockerfile",
@@ -21,9 +21,9 @@
 	"settings": {},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		// "christian-kohler.path-intellisense",
 		"ducfilan.pug-formatter",
-		"angular.ng-template"
+		"angular.ng-template",
+		"sibiraj-s.vscode-scss-formatter"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
