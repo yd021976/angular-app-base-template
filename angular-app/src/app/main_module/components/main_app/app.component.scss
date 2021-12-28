@@ -2,6 +2,16 @@
     display: block;
 }
 
+a:hover {
+    background-color: #197fff;
+}
+a {
+    color: whitesmoke;
+    font-weight: lighter;
+}
+a.active {
+    font-weight: bold;
+}
 .toolbar {
     position: absolute;
     top: 0;
