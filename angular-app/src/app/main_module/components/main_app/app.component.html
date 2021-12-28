@@ -1,22 +1,7 @@
-<!-- Toolbar/Navigation -->
-<div class="toolbar" role="banner">
-  <img width="40" alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
-  <div class="navigation">
-    <ul class="nav">
-      <li class="nav-item">
-        <a routerLink="login" routerLinkActive="active" class="nav-link">Login</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="infos" routerLinkActive="active" class="nav-link">Infos</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="about" routerLinkActive="active" class="nav-link">About</a>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="content" role="main">
-  <router-outlet></router-outlet>
+<div>
+  <app-header></app-header>
+  <app-contents role="main">
+    <router-outlet></router-outlet>
+  </app-contents>
+  <app-footer></app-footer>
 </div>

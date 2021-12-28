@@ -4,10 +4,16 @@ import { LoginModule } from '../modules/login/login.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/main_app/app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ContentsComponent } from './components/contents/contents.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    ContentsComponent
   ],
   imports: [
     BrowserModule,
