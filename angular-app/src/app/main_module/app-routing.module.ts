@@ -5,18 +5,18 @@ import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
   {
-    component:AboutComponent,
-    path:'Home'
+    component: AboutComponent,
+    path: 'Home'
   },
   {
-    component:LoginComponent,
-    path:'Login'
+    component: LoginComponent,
+    path: 'Login'
   },
   {
-    component:AboutComponent,
-    path:'infos'
+    component: AboutComponent,
+    path: 'infos'
   },
- 
+
 ];
 
 @NgModule({

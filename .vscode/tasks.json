@@ -11,8 +11,27 @@
       },
       "isBackground": true,
       "problemMatcher": {
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "(.*?)"
+          },
+          "endsPattern": {
+            "regexp": "Compiled | Failed to compile."
+          }
+        },
         "owner": "typescript",
-        "pattern": "$tsc",
+        "fileLocation":["relative","${workspaceFolder}/angular-app"],
+        "base": "$tsc",
+        "pattern": {
+          "regexp": "^Error: ([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "code": 5,
+          "message": 6
+        },
       },
       "presentation": {
         "group": "Serve",

@@ -7,31 +7,12 @@
       "type": "pwa-chrome",
       "request": "launch",
       "preLaunchTask": "Start serve & debug",
-      "url": "http://localhost:4200/"
-    },
-    {
-      "name": "ng attach",
-      "type": "chrome",
-      "request": "attach",
-      "preLaunchTask": "npm: start",
       "url": "http://localhost:4200/*",
       "webRoot": "${workspaceFolder}/angular-app/src",
       "sourceMapPathOverrides": {
         "webpack:///./src/*": "${webRoot}/*"
       },
-      "port": 9222
-    },
-    {
-      "name": "ng launch debug",
-      "type": "pwa-chrome",
-      "request": "launch",
-      "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/*",
-      "webRoot": "${workspaceFolder}/angular-app/src",
-      "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${webRoot}/*"
-      },
-      "port": 9222
+      "port": 9222,
     }
   ]
 }
