@@ -9,13 +9,19 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ContentsComponent } from './components/contents/contents.component';
 
 import { TabMenuModule } from 'primeng/tabmenu';
+import { HomeComponent } from './components/home/home.component';
+
+import {ActiveItemWorkaroundDirective} from '../directives/primeng-tabmenu-fix.directive';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ContentsComponent
+    ContentsComponent,
+    HomeComponent,
+    ActiveItemWorkaroundDirective,
   ],
   imports: [
     BrowserModule,
