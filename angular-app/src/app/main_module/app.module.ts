@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ContentsComponent } from './components/contents/contents.component';
 
+import { TabMenuModule } from 'primeng/tabmenu';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,7 @@ import { ContentsComponent } from './components/contents/contents.component';
   ],
   imports: [
     BrowserModule,
+    TabMenuModule,
     AppRoutingModule,
     LoginModule,
   ],

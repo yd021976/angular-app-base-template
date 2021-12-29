@@ -3,8 +3,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "script": "start",
+      "label": "Start serve & debug",
+      "type": "shell",
+      "command": "npm start",
       "options": {
         "cwd": "${workspaceFolder}/angular-app"
       },
@@ -12,15 +13,15 @@
       "problemMatcher": {
         "owner": "typescript",
         "pattern": "$tsc",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "Compiled successfully"
-          }
-        }
+      },
+      "presentation": {
+        "group": "Serve",
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
       }
     },
     {

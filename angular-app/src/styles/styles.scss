@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+.p-tabmenu {
+    .p-tabmenu-nav {
+        .p-tabmenuitem {
+            .p-menuitem-link {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                &:not(.p-disabled) {
+                    &:focus {
+                        outline: 0 none;
+                        outline-offset: 0;
+                        box-shadow: none;
+                    }
+                    &:hover {
+                        &:not(.p-highlight) {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
