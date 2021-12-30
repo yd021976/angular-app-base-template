@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div *ngIf="ctrrl.loginService.isError | async">
+    test login = true
+</div>
+
+<form class="flex-1">
+    <div class="">
+        <div class="field grid flex">
+            <label for="email" class="col-2">e-mail</label>
+            <div class="col-4">
+                <input id="email" type="text" pInputText>
+            </div>
+        </div>
+        <div class="field grid flex">
+            <label for="password" class="col-2">Password</label>
+            <div class="col">
+                <p-password id="password"></p-password>
+            </div>
+        </div>
+        <div class="grid flex">
+            <div class="col-offset-3">
+                <p-button label="Login" (click)="ctrl.login()"></p-button>
+            </div>
+        </div>
+    </div>
+
+</form>
