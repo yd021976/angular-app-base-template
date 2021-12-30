@@ -17,14 +17,16 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "Compiled | Failed to compile."
+            "regexp": "(Compiled successfully|Failed to compile)"
           }
         },
-        "owner": "typescript",
-        "fileLocation":["relative","${workspaceFolder}/angular-app"],
         "base": "$tsc",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}/angular-app"
+        ],
         "pattern": {
-          "regexp": "^Error: ([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
+          "regexp": "^Error: ([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):(\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
           "file": 1,
           "line": 2,
           "column": 3,
@@ -33,33 +35,15 @@
           "message": 6
         },
       },
-      "presentation": {
-        "group": "Serve",
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      }
+      // "presentation": {
+      //   "group": "Serve",
+      //   "echo": true,
+      //   "reveal": "always",
+      //   "focus": false,
+      //   "panel": "shared",
+      //   "showReuseMessage": true,
+      //   "clear": false
+      // }
     },
-    {
-      "type": "npm",
-      "script": "test",
-      "isBackground": true,
-      "problemMatcher": {
-        "owner": "typescript",
-        "pattern": "$tsc",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "bundle generation complete"
-          }
-        }
-      }
-    }
   ]
 }
