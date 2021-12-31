@@ -10,40 +10,15 @@
         "cwd": "${workspaceFolder}/angular-app"
       },
       "isBackground": true,
-      "problemMatcher": {
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "(Compiled successfully|Failed to compile)"
-          }
-        },
-        "base": "$tsc",
-        "fileLocation": [
-          "relative",
-          "${workspaceFolder}/angular-app"
-        ],
-        "pattern": {
-          "regexp": "^Error: ([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):(\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
-          "file": 1,
-          "line": 2,
-          "column": 3,
-          "severity": 4,
-          "code": 5,
-          "message": 6
-        },
-      },
-      // "presentation": {
-      //   "group": "Serve",
-      //   "echo": true,
-      //   "reveal": "always",
-      //   "focus": false,
-      //   "panel": "shared",
-      //   "showReuseMessage": true,
-      //   "clear": false
-      // }
+      "presentation": {
+        "group": "Serve",
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
     },
   ]
 }

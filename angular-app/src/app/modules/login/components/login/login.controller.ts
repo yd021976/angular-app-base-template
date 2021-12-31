@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { UserLoginModel } from "src/app/models/login.model";
 import { LoginService } from "src/app/services/Login/login.service";
 
 
@@ -19,7 +20,7 @@ export class LoginController {
     /**
      * 
      */
-    login() {
-        this.loginService.login()
+    login(credentials:UserLoginModel) {
+        this.loginService.login(credentials)
     }
 }
