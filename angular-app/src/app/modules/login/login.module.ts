@@ -17,6 +17,8 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 // End of imports
 
 
@@ -30,14 +32,15 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     RouterModule.forChild([
       {
+        path: 'login',
         component: LoginComponent,
-        path: 'login'
       }
     ]),
     FormsModule,
     PasswordModule,
     InputTextModule,
     ButtonModule,
+    MessagesModule,MessageModule
   ],
   providers: [
     LoginController,

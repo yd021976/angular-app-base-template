@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserLoginModel } from 'src/app/models/login.model';
+import { LoginCredentialsModel } from 'src/app/models/login.model';
 import { LoginController } from './login.controller';
 
 @Component({
@@ -8,7 +8,7 @@ import { LoginController } from './login.controller';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public credentials: UserLoginModel = { email: '', password: '' }
+  public credentials: LoginCredentialsModel = { email: '', password: '' }
   constructor(public ctrl: LoginController) { }
 
   ngOnInit(): void {

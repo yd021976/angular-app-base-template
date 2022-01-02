@@ -4,9 +4,10 @@ import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  /** redirect root url to Home path */
   {
     path: '',
-    redirectTo: 'infos',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -16,6 +17,11 @@ const routes: Routes = [
   {
     path: 'infos',
     component: AboutComponent,
+  },
+  /** Handle 404 page not found */
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 
 ];
