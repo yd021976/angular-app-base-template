@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
-import {ToolbarModule} from 'primeng/toolbar';
+import { ToolbarModule } from 'primeng/toolbar';
 
 /** module components */
 import { HomeComponent } from './components/home/home.component';
@@ -30,7 +30,7 @@ import { ActiveItemWorkaroundDirective } from '../directives/primeng-tabmenu-fix
 /** components controllers */
 import { UserMenuController } from './components/user-menu/user-menu.controller';
 import { LoginService } from '../services/Login/login.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 // end of imports
 
 
@@ -89,6 +89,6 @@ export class AppModule { }
 
 function initLogin(loginService: LoginService) {
   return () => {
-    return loginService.login();
+    return loginService.login().pipe(tap(auth => auth));
   }
 }

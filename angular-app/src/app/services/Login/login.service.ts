@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of, Subject, Subscriber, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, from, map, Observable, of, Subject, Subscriber, throwError } from 'rxjs';
 import { LoginServiceModel, LoginServiceResponseModel, LoginCredentialsModel } from 'src/app/models/login.model';
 import { UserModel } from 'src/app/models/user.model';
 
@@ -39,50 +39,56 @@ export class LoginService {
     if (!credentials) {
       const token = localStorage.getItem('token');
       if (!token) {
-        return this.authInfos$; // Silently do nothing if no token in local storage
+        return of(this.AUTHINFOS_INIT); // Silently do nothing if no token in local storage
       } else {
         const headers: HttpHeaders = new HttpHeaders().append('Authorization', `Bearer ${token}`)
         return this.httpClient.get<LoginServiceResponseModel>(this.SERVER + this.LOGIN_JWT_URL, { headers: headers })
-          .pipe(catchError(this.autoLoginErrorHandler.bind(this))) /** this will reset authInfos observable and NOT throws error */
-          .pipe(map((response) => {
-            /** a NULL response indicates an error occurs (token expired or no token stored or token is "revoked") */
-            if (response !== null) return this.handleLoginResponse(response);
-            return this.AUTHINFOS_INIT;
-          }))
+          .pipe(
+            catchError(this.autoLoginErrorHandler.bind(this)), /** this will reset authInfos observable and NOT throws error */
+            map((response) => {
+              /** a NULL response indicates an error occurs (token expired or no token stored or token is "revoked") */
+              if (response !== null) return this.handleLoginResponse(response);
+              return this.AUTHINFOS_INIT;
+            })
+          )
       }
     } else {
       return this.httpClient.post<LoginServiceResponseModel>(this.SERVER + this.LOGIN_URL, credentials)
-        .pipe(catchError(this.httpErrorHandler.bind(this)))
-        .pipe(map((response) => { 
-          return this.handleLoginResponse(response);
-        }))
+        .pipe(
+          catchError(this.httpErrorHandler.bind(this)),
+          map((response) => {
+            return this.handleLoginResponse(response);
+          })
+        )
     }
   }
 
   /**
    * Logout user
    */
-  public logout() {
+  public logout(): Observable<LoginServiceModel> {
     const token = localStorage.getItem('token');
 
     /** if no token, assume user is logged out */
     if (!token) {
       this.handleLogoutResponse(null);
-      return;
+      return of();
     }
 
     const httpheaders: HttpHeaders = new HttpHeaders().append('Authorization', `Bearer ${token}`)
 
-    this.httpClient.post(
+    return this.httpClient.post(
       this.SERVER + this.LOGOUT_URL,
       {}, /** no body params */
       {
         headers: httpheaders
       })
-      .pipe(catchError(this.httpErrorHandler.bind(this))) /** if error occured, assume user is logged out */
-      .subscribe((logout) => {
-        this.handleLogoutResponse(logout)
-      })
+      .pipe(
+        catchError(
+          this.httpErrorHandler.bind(this)), /** if error occured, assume user is logged out */
+        map((logout) => {
+          return this.handleLogoutResponse(logout)
+        }))
   }
 
   /**
@@ -124,6 +130,8 @@ export class LoginService {
 
     /** remove token in local storage */
     localStorage.removeItem('token');
+
+    return newUserState;
   }
 
   /**
