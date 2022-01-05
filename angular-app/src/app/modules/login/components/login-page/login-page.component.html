@@ -1,0 +1,6 @@
+<div *ngIf="(!(ctrl.loginService.authInfos$|async)?.isAuth) || true">
+    <app-login></app-login>
+</div>
+<div *ngIf="(ctrl.loginService.authInfos$|async)?.isAuth || false">
+    <app-logout></app-logout>
+</div>

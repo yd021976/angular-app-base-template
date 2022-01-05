@@ -14,7 +14,9 @@ export class UserMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menuItems = [
       {
-        "label": "Logout"
+        "label": "Logout",
+        "icon": "pi pi-fw pi-sign-out",
+        command: this.ctrl.logout.bind(this.ctrl)
       }
     ]
   }

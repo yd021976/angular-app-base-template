@@ -1,4 +1,4 @@
-<div class="flex p-component pr-6" *ngIf="(ctrl.loginService.authInfos | async)?.isAuth || false">
+<div class="flex p-component" *ngIf="(ctrl.loginService.authInfos$ | async)?.isAuth || false">
     <p-menu #menu [popup]="true" [model]="menuItems"></p-menu>
     <button type="button" pButton icon="pi pi-user" (click)="menu.toggle($event)"></button>
 </div>

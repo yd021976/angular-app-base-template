@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginCredentialsModel } from 'src/app/models/login.model';
-import { LoginController } from './login.controller';
+import { LoginController } from '../../controllers/login.controller';
 
 @Component({
   selector: 'app-login',

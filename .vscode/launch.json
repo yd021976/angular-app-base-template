@@ -4,7 +4,7 @@
   "configurations": [
     {
       "name": "ng launch",
-      "type": "pwa-chrome",
+      "type": "chrome",
       "request": "launch",
       "preLaunchTask": "Start serve & debug",
       "url": "http://localhost:4200/*",

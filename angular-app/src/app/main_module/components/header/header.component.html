@@ -1,8 +1,12 @@
 <div class="flex flex-row align-items-center">
-    <div class="flex p-component pr-6">
+    <div class="flex p-component pr-6 align-self-stretch flex align-items-center justify-content-center element">
         <img src="../../../../assets/earth.svg">
         <span>nline discover</span>
     </div>
-    <p-tabMenu [model]="items" class="flex-1" activeItemWorkaround></p-tabMenu>
-    <app-user-menu></app-user-menu>
+    <div class="flex-1 p-component">
+        <p-tabMenu [model]="items" class="flex-1" activeItemWorkaround></p-tabMenu>
+    </div>
+    <div class="flex align-self-stretch flex align-items-center justify-content-center element">
+        <app-user-menu></app-user-menu>
+    </div>
 </div>

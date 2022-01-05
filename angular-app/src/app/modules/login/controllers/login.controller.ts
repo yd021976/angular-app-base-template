@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Message } from "primeng/api";
 import { LoginCredentialsModel, LoginServiceModel } from "src/app/models/login.model";
 import { LoginService } from "src/app/services/Login/login.service";
 
@@ -8,19 +7,20 @@ import { LoginService } from "src/app/services/Login/login.service";
 @Injectable()
 export class LoginController {
     constructor(public loginService: LoginService, protected router: Router) {
-        /** Handle login service events change */
-        this.loginService.authInfos.subscribe((loginserviceinfos) => {
-            this.afterLogin(loginserviceinfos);
-        })
     }
 
     /**
      * 
      */
     login(credentials: LoginCredentialsModel) {
-        this.loginService.login(credentials)
+        const s = this.loginService.login(credentials).subscribe((authentication) => {
+            this.afterLogin(authentication);
+        })
+        s.unsubscribe();
     }
-
+    public logout() {
+        this.loginService.logout();
+    }
     /**
      * Redirect to home once login is true
      * @param loginServiceInfos 

@@ -3,8 +3,8 @@
     .p-tabmenu-nav {
         .p-tabmenuitem {
             .p-menuitem-link {
-                padding-top: 5px;
-                padding-bottom: 5px;
+                padding: 1rem 1rem;
+                // padding-bottom: 5px;
                 &:not(.p-disabled) {
                     &:focus {
                         outline: 0 none;
