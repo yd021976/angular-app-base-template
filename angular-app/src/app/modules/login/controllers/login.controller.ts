@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { tap } from "rxjs";
 import { LoginCredentialsModel, LoginServiceModel } from "src/app/models/login.model";
 import { LoginService } from "src/app/services/Login/login.service";
 
@@ -18,7 +17,6 @@ export class LoginController {
             this.afterLogin(authinfos);
             subs.unsubscribe();
         })
-
     }
 
     /**
@@ -31,6 +29,7 @@ export class LoginController {
     }
     /**
      * Redirect to home once login is true
+     * 
      * @param loginServiceInfos 
      */
     protected afterLogin(loginServiceInfos: LoginServiceModel) {

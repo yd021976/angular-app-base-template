@@ -30,7 +30,7 @@ import { ActiveItemWorkaroundDirective } from '../directives/primeng-tabmenu-fix
 /** components controllers */
 import { UserMenuController } from './components/user-menu/user-menu.controller';
 import { LoginService } from '../services/Login/login.service';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 // end of imports
 
 
@@ -89,6 +89,11 @@ export class AppModule { }
 
 function initLogin(loginService: LoginService) {
   return () => {
-    return loginService.login().pipe(tap(auth => auth));
+    return loginService.login()
+      .pipe(
+        map((auth) => {
+          return auth
+        }),
+      );
   }
 }

@@ -1,8 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, from, map, Observable, of, Subject, Subscriber, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
 import { LoginServiceModel, LoginServiceResponseModel, LoginCredentialsModel } from 'src/app/models/login.model';
-import { UserModel } from 'src/app/models/user.model';
+
+/** 
+ * internal types
+ */
+type TLOGIN_REQUEST = Observable<LoginServiceResponseModel>
+type TLOGIN_TYPE = 'autologin' | 'login' | 'logout';
+
+type TREQUEST = {
+  type: TLOGIN_TYPE,
+  request: TLOGIN_REQUEST,
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +31,7 @@ export class LoginService {
     isError: false,
     token: '',
   }
+
   public authInfos$: BehaviorSubject<LoginServiceModel>
 
   /**
@@ -32,78 +43,125 @@ export class LoginService {
   }
 
   /**
+   * Perform login request
+   * - If no credentials, will try to use a stored token.
+   * - If none of credentials and token provided, silently reset authentication infos to default with no errors 
    * 
-   * @param credentials 
+   * @param credentials User credentials
+   * @returns New login state as `Observable`
+   * @throws Error if request login type is `login`
    */
   public login(credentials?: LoginCredentialsModel): Observable<LoginServiceModel> {
-    if (!credentials) {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        return of(this.AUTHINFOS_INIT); // Silently do nothing if no token in local storage
-      } else {
-        const headers: HttpHeaders = new HttpHeaders().append('Authorization', `Bearer ${token}`)
-        return this.httpClient.get<LoginServiceResponseModel>(this.SERVER + this.LOGIN_JWT_URL, { headers: headers })
-          .pipe(
-            catchError(this.autoLoginErrorHandler.bind(this)), /** this will reset authInfos observable and NOT throws error */
-            map((response) => {
-              /** a NULL response indicates an error occurs (token expired or no token stored or token is "revoked") */
-              if (response !== null) return this.handleLoginResponse(response);
-              return this.AUTHINFOS_INIT;
-            })
-          )
-      }
-    } else {
-      return this.httpClient.post<LoginServiceResponseModel>(this.SERVER + this.LOGIN_URL, credentials)
-        .pipe(
-          catchError(this.httpErrorHandler.bind(this)),
-          map((response) => {
-            return this.handleLoginResponse(response);
-          })
-        )
-    }
+    const req = this.prepareLoginRequest(credentials);
+
+    return req.request.pipe(
+      catchError(this.httpErrorHandler.bind(this, req)),
+      map((response) => {
+        if (response) {
+          return this.handleLoginSuccessResponse(response);
+        } else {
+          return this.handleLogoutSuccessResponse(null); // If response was NULL, assume no login was done, so we logout
+        }
+      })
+    );
   }
 
+
   /**
-   * Logout user
+   * Perform logout request
    */
   public logout(): Observable<LoginServiceModel> {
-    const token = localStorage.getItem('token');
+    const req = this.prepareLogoutRequest()
 
-    /** if no token, assume user is logged out */
-    if (!token) {
-      this.handleLogoutResponse(null);
-      return of();
-    }
-
-    const httpheaders: HttpHeaders = new HttpHeaders().append('Authorization', `Bearer ${token}`)
-
-    return this.httpClient.post(
-      this.SERVER + this.LOGOUT_URL,
-      {}, /** no body params */
-      {
-        headers: httpheaders
-      })
+    return req.request
       .pipe(
         catchError(
-          this.httpErrorHandler.bind(this)), /** if error occured, assume user is logged out */
+          this.httpErrorHandler.bind(this, req)), /** if error occured, assume user is logged out */
         map((logout) => {
-          return this.handleLogoutResponse(logout)
+          return this.handleLogoutSuccessResponse(logout)
         }))
   }
 
   /**
-   * Success login actions
+   * Construct request and parameters for login request. If no credentials provided, will use token stored in browser localstorage
    * 
-   * @param loginResponse 
+   * @param credentials The user login/password to login
+   * @returns An `observable` of type `LoginServiceResponseModel`
+   * @throws An `Observable` of type `never`
    */
-  private handleLoginResponse(loginResponse: LoginServiceResponseModel) {
+  private prepareLoginRequest(credentials?: LoginCredentialsModel): TREQUEST {
+    const token = localStorage.getItem('token');
+    const method: string = credentials ? 'POST' : 'GET';
+    const url: string = credentials ? this.SERVER + this.LOGIN_URL : this.SERVER + this.LOGIN_JWT_URL;
+
+    let headers = new HttpHeaders(), params: any = {}, logintype: TLOGIN_TYPE, errorResponseRequest = undefined;
+
+    if (credentials) {
+      params['body'] = credentials;
+      logintype = 'login';
+    } else {
+      logintype = 'autologin';
+      /** if no credentials provided and token is empty, generate an observable request that throws an error */
+      if (!token) {
+        errorResponseRequest = throwError(() => {
+          return new Error('autologin failed');
+        });
+      } else {
+        headers = headers.append('Authorization', `Bearer ${token}`);
+        params['headers'] = headers;
+      }
+    }
+
+    /** Return the observable httpclient request to execute */
+    const req: TLOGIN_REQUEST = errorResponseRequest === undefined ? (this.httpClient.request<LoginServiceResponseModel>(method, url, { ...params }) as any) : errorResponseRequest;
+    return {
+      type: logintype,
+      request: req as TLOGIN_REQUEST,
+    }
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  private prepareLogoutRequest(): TREQUEST {
+    let req: TLOGIN_REQUEST;
+    const method = 'POST';
+    const url = this.SERVER + this.LOGOUT_URL;
+
+    const token = localStorage.getItem('token');
+    const httpheaders: HttpHeaders = new HttpHeaders().append('Authorization', `Bearer ${token}`);
+
+    /** if no token is available, just throw an Observable error */
+    if (!token) {
+      req = throwError(() => { });
+    }
+    else {
+      req = this.httpClient.request<LoginServiceResponseModel>(method, url, { headers: httpheaders });
+    }
+
+    return <TREQUEST>{
+      type: 'logout',
+      request: req,
+    };
+  }
+
+
+  /**
+   * Compute and push `this.authInfos$`new state.
+   * **NOTE:**
+   * - In case `loginResponse`param is `null` (i.e. A silent error was handled) we simply set `this.authInfos` to defaults
+   * 
+   * @param loginResponse If sets to `null`, reset `this.authInfos$`to defaults value (i.e. Not logged in, no errors)
+   */
+  private handleLoginSuccessResponse(loginResponse: LoginServiceResponseModel) {
     /** push new user state */
     const newUserState = Object.assign<{}, LoginServiceModel>({}, {
       isError: false,
       errorMsg: '',
       isAuth: true,
       token: loginResponse.token,
-      user: loginResponse.user
+      user: loginResponse.user,
     })
     this.authInfos$.next(newUserState)
 
@@ -114,10 +172,11 @@ export class LoginService {
   }
 
   /**
+   * Perform logout success actions
    * 
    * @param logoutResponse 
    */
-  private handleLogoutResponse(logoutResponse: any) {
+  private handleLogoutSuccessResponse(logoutResponse: any) {
     /** push new user state */
     const newUserState = Object.assign<{}, LoginServiceModel>({}, {
       isError: false,
@@ -135,58 +194,50 @@ export class LoginService {
   }
 
   /**
+   * Handle http login request error
    * 
    * @param error 
    * @returns 
+   * @throws Error Observable in case of 'login' request type. Null Observable in other cases
    */
-  protected httpErrorHandler(error: any) {
+  protected httpErrorHandler(request: TREQUEST, error: any) {
+    /** compute error states */
+    const message = this.buildErrorMsg(error);
+    const isErr = request.type === 'login' ? true : false; /** App UI errors only for 'login', all errors show up in browser console */
+    const errMsg = request.type === 'login' ? message : ''; /** App UI errors only for 'login', all errors show up in browser console */
+
     /** push new user state */
     const newUserState = Object.assign<{}, LoginServiceModel>({}, {
-      isError: true,
-      errorMsg: this.buildErrorMsg(error),
+      isError: isErr,
+      errorMsg: errMsg,
       isAuth: false,
       token: '',
     })
-    this.authInfos$.next(newUserState)
+    this.authInfos$.next(newUserState);
 
     /** store token in local storage */
     localStorage.removeItem('token');
 
-    /** throw error */
-    return throwError(() => {
-      return "Something wrong happened...";
-    });
+    /** compute return of method */
+    const throwFn = () => { return `Login error when attempts to ${request.type}\nError was ${message}`; }
+    // const throwFn = () => { return `Login error`; }
+
+    /** throw error only in login case, else return a null Observable */
+    return request.type === 'login' ? throwError(throwFn) : of(null);
   }
 
-  /**
-   * 
-   * @param error 
-   */
-  protected autoLoginErrorHandler(error: any, caught: Observable<any>) {
-    /** push new user state */
-    const newUserState = Object.assign<{}, LoginServiceModel>({}, {
-      isError: false,
-      errorMsg: '',
-      isAuth: false,
-      token: '',
-      user: undefined
-    })
-    this.authInfos$.next(newUserState)
-
-    /** store token in local storage */
-    localStorage.removeItem('token');
-
-    /** throw error */
-    return of(null);
-  }
   /**
    * Format error message
    * 
-   * @param error 
+   * @param httpErrorResponse 
    * @returns 
    */
-  private buildErrorMsg(error: any) {
-    return error.error.error ? `${error.error.error} : ${error.error.message}` : `${error.error.message}`
+  private buildErrorMsg(httpErrorResponse: any) {
+    if (httpErrorResponse instanceof Error) {
+      return httpErrorResponse.message;
+    } else {
+      return `${httpErrorResponse.error.message}`
+    }
   }
 
 }
