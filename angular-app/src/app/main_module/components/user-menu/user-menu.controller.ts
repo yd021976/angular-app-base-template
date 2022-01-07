@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { LoginServiceModel } from "src/app/models/login.model";
-import { LoginService } from "src/app/services/Login/login.service";
+import { AuthenticationService } from "src/app/services/authentication/authentication.service";
 
 @Injectable()
 export class UserMenuController {
-    constructor(public loginService: LoginService, private router: Router) {
-        this.loginService.authInfos$.subscribe((status) => {
+    constructor(public authService: AuthenticationService, private router: Router) {
+        this.authService.authInfos$.subscribe((status) => {
 
         })
     }
 
     public logout() {
-        this.loginService.logout();
+        this.authService.logout();
     }
 }

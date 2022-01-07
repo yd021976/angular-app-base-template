@@ -9,8 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 
 // Module providers
-import { LoginService } from 'src/app/services/Login/login.service';
-import { LoginController } from './controllers/login.controller';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationController } from './controllers/authentication.controller';
 
 // PrimeNG modules
 import { PasswordModule } from 'primeng/password';
@@ -19,16 +19,20 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 // End of imports
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    LoginPageComponent,
-    LogoutComponent
+    AuthenticationComponent,
+    LogoutComponent,
+    SignupComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +40,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     HttpClientModule,
     RouterModule.forChild([
       {
-        path: 'login',
-        component: LoginPageComponent,
+        path: 'authentication',
+        component: AuthenticationComponent,
       }
     ]),
     FormsModule,
@@ -47,9 +51,9 @@ import { LogoutComponent } from './components/logout/logout.component';
     MessagesModule, MessageModule
   ],
   providers: [
-    LoginController,
-    LoginService
+    AuthenticationController,
+    AuthenticationService
   ],
   exports: [RouterModule]
 })
-export class LoginModule { }
+export class AuthenticationModule { }

@@ -1,4 +1,4 @@
-<form class="flex-1" *ngIf="!(ctrl.loginService.authInfos$ | async)?.isAuth">
+<form class="flex-1" *ngIf="!(ctrl.authService.authInfos$ | async)?.isAuth">
     <div class="flex-1">
         <div class="flex-row">
 
@@ -28,11 +28,11 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="(ctrl.loginService.authInfos$ | async)?.isError || false" class="flex grid">
+            <div *ngIf="(ctrl.authService.authInfos$ | async)?.isError || false" class="flex grid">
                 <div class="field grid col-8">
                     <div class="col justify-content-center">
                         <p-message severity="error"
-                            [text]="(ctrl.loginService.authInfos$ | async)?.errorMsg || 'No infos'">
+                            [text]="(ctrl.authService.authInfos$ | async)?.errorMsg || 'No infos'">
                         </p-message>
                     </div>
                 </div>

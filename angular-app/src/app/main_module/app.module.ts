@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /** Feature modules */
-import { LoginModule } from '../modules/login/login.module';
+import { AuthenticationModule } from '../modules/authentication/authentication.module';
 
 /** Routing modules */
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +29,7 @@ import { ActiveItemWorkaroundDirective } from '../directives/primeng-tabmenu-fix
 
 /** components controllers */
 import { UserMenuController } from './components/user-menu/user-menu.controller';
-import { LoginService } from '../services/Login/login.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 import { map, Observable, tap } from 'rxjs';
 // end of imports
 
@@ -55,20 +55,20 @@ import { map, Observable, tap } from 'rxjs';
     ButtonModule,
     ToolbarModule,
     /** Feature modules */
-    LoginModule,
+    AuthenticationModule,
     /** Routing modules */
     AppRoutingModule, /** SHOULD be the last one because of route order "child routes" should never be matched (@see https://angular.io/guide/router#route-order) */
   ],
   providers: [
     /** module services */
-    LoginService,
+    AuthenticationService,
 
     /** components controllers */
     {
       provide: UserMenuController,
       useClass: UserMenuController,
       multi: false,
-      deps: [LoginService]
+      deps: [AuthenticationService]
     },
 
 
@@ -80,16 +80,16 @@ import { map, Observable, tap } from 'rxjs';
       provide: APP_INITIALIZER,
       useFactory: initLogin,
       multi: true,
-      deps: [LoginService]
+      deps: [AuthenticationService]
     }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-function initLogin(loginService: LoginService) {
+function initLogin(loginService: AuthenticationService) {
   return () => {
-    return loginService.login()
+    return loginService.autoLogin()
       .pipe(
         map((auth) => {
           return auth

@@ -5,7 +5,7 @@ export interface LoginCredentialsModel {
     password: string
 }
 
-export interface LoginServiceModel {
+export interface AuthenticationServiceModel {
     isError: boolean
     errorMsg?: string
     token: string
@@ -13,7 +13,7 @@ export interface LoginServiceModel {
     user?: UserModel
 }
 
-export interface LoginServiceResponseModel {
+export interface AuthenticationServiceResponseModel {
     token: string
     user: UserModel
 }

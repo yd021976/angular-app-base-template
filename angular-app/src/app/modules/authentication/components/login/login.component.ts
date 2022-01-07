@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginCredentialsModel } from 'src/app/models/login.model';
-import { LoginController } from '../../controllers/login.controller';
+import { AuthenticationController } from '../../controllers/authentication.controller';
 
 @Component({
-  selector: 'app-login',
+  selector: 'authentication-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public credentials: LoginCredentialsModel = { email: '', password: '' }
-  constructor(public ctrl: LoginController) { }
+  constructor(public ctrl: AuthenticationController) { }
 
   ngOnInit(): void {
   }
