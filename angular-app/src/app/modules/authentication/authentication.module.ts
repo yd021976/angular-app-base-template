@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 
 // Module providers
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AuthenticationService } from 'src/app/modules/authentication/services/authentication/authentication.service';
 import { AuthenticationController } from './controllers/authentication.controller';
 
 // PrimeNG modules

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { LoginCredentialsModel, AuthenticationServiceModel } from "src/app/models/login.model";
-import { AuthenticationService } from "src/app/services/authentication/authentication.service";
+import { LoginCredentialsModel, AuthenticationServiceModel } from "src/app/modules/authentication/models/authentication.model";
+import { AuthenticationService } from "src/app/modules/authentication/services/authentication/authentication.service";
 
 
 @Injectable()

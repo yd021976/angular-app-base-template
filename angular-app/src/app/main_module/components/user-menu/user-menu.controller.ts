@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthenticationService } from "src/app/services/authentication/authentication.service";
+import { AuthenticationService } from "src/app/modules/authentication/services/authentication/authentication.service";
 
 @Injectable()
 export class UserMenuController {

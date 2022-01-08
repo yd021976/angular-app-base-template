@@ -1,11 +1,11 @@
 import { Observable } from "rxjs";
-import { AuthenticationServiceResponseModel } from "src/app/models/login.model";
+import { AuthenticationServiceResponseModel } from "src/app/modules/authentication/models/authentication.model";
 
 /** 
  * types
  */
  export type TAUTHENTICATION_BASE_REQUEST = Observable<AuthenticationServiceResponseModel>
- export type TAUTHENTICATION_TYPE = 'autologin' | 'login' | 'logout';
+ export type TAUTHENTICATION_TYPE = 'autologin' | 'login' | 'logout' | 'signup';
  
  export type TAUTHENTICATION_REQUEST = {
    type: TAUTHENTICATION_TYPE,

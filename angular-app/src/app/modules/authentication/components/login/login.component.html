@@ -28,11 +28,11 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="(ctrl.authService.authInfos$ | async)?.isError || false" class="flex grid">
+            <div *ngIf="(ctrl.authService.authInfos$ | async)?.error?.isError || false" class="flex grid">
                 <div class="field grid col-8">
                     <div class="col justify-content-center">
                         <p-message severity="error"
-                            [text]="(ctrl.authService.authInfos$ | async)?.errorMsg || 'No infos'">
+                            [text]="(ctrl.authService.authInfos$ | async)?.error?.message || 'Error message unavailable'">
                         </p-message>
                     </div>
                 </div>

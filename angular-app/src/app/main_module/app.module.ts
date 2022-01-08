@@ -29,7 +29,7 @@ import { ActiveItemWorkaroundDirective } from '../directives/primeng-tabmenu-fix
 
 /** components controllers */
 import { UserMenuController } from './components/user-menu/user-menu.controller';
-import { AuthenticationService } from '../services/authentication/authentication.service';
+import { AuthenticationService } from '../modules/authentication/services/authentication/authentication.service';
 import { map, Observable, tap } from 'rxjs';
 // end of imports
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { LoginCredentialsModel, AuthenticationServiceResponseModel } from "src/app/models/login.model";
-import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_BASE_REQUEST, TAUTHENTICATION_TYPE, TAUTHENTICATION_REQUEST } from "./authentication.types";
+import { LoginCredentialsModel, AuthenticationServiceResponseModel } from "src/app/modules/authentication/models/authentication.model";
+import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_BASE_REQUEST, TAUTHENTICATION_TYPE, TAUTHENTICATION_REQUEST } from "../../models/authentication.types";
 
 export class AuthenticationRequest {
 
@@ -92,12 +92,15 @@ export class AuthenticationRequest {
      * 
      * @param credentials 
      */
-    public prepareSignupRequest(credentials: LoginCredentialsModel): Observable<AuthenticationServiceResponseModel> {
+    public prepareSignupRequest(credentials: LoginCredentialsModel): TAUTHENTICATION_REQUEST {
         const url = this.buildURL(this.config.signup_url);
         const method = 'POST';
         const params = { body: credentials }
         const request = this.httpClient.request<AuthenticationServiceResponseModel>(method, url, params);
-        return request;
+        return {
+            type: 'signup',
+            request: request
+        }
     }
 
 

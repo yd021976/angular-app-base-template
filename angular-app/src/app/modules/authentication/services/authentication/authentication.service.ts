@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
-import { AuthenticationServiceModel, AuthenticationServiceResponseModel, LoginCredentialsModel } from 'src/app/models/login.model';
+import { AuthenticationErrorModel, AuthenticationServiceModel, AuthenticationServiceResponseModel, LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
 import { AuthenticationRequest } from './authentication.request';
-import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_REQUEST } from './authentication.types';
+import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_REQUEST } from '../../models/authentication.types';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +20,11 @@ export class AuthenticationService {
 
   /** Auth infos initial object state */
   private readonly AUTHINFOS_INIT: AuthenticationServiceModel = {
-    errorMsg: '',
+    error: {
+      message: '',
+      isError: false,
+    },
     isAuth: false,
-    isError: false,
     token: '',
   }
 
@@ -54,7 +56,7 @@ export class AuthenticationService {
     return req.request.pipe(
       catchError(this.httpErrorHandler.bind(this, req)),
       map((response) => {
-        return response !== null ? this.handleLoginSuccessResponse(response) : this.handleLogoutSuccessResponse();
+        return this.handleLoginSuccessResponse(response);
       }));
   }
 
@@ -74,11 +76,7 @@ export class AuthenticationService {
     return req.request.pipe(
       catchError(this.httpErrorHandler.bind(this, req)),
       map((response) => {
-        if (response) {
-          return this.handleLoginSuccessResponse(response);
-        } else {
-          return this.handleLogoutSuccessResponse(); // If response was NULL, assume no login was done, so we logout
-        }
+        return this.handleLoginSuccessResponse(response);
       })
     );
   }
@@ -87,8 +85,14 @@ export class AuthenticationService {
   /**
    * 
    */
-  public signup(credentials: LoginCredentialsModel) {
-
+  public signup(credentials: LoginCredentialsModel): Observable<AuthenticationServiceModel> {
+    const req = this.loginRequests.prepareSignupRequest(credentials);
+    return req.request.pipe(
+      catchError(this.httpErrorHandler.bind(this, req)),
+      map((response) => {
+        return this.handleLoginSuccessResponse(response);
+      })
+    )
   }
 
   /**
@@ -103,7 +107,7 @@ export class AuthenticationService {
       .pipe(
         catchError(
           this.httpErrorHandler.bind(this, req)), /** if error occured, assume user is logged out */
-        map((logout) => {
+        map(() => {
           return this.handleLogoutSuccessResponse();
         }))
   }
@@ -118,8 +122,11 @@ export class AuthenticationService {
   private handleLoginSuccessResponse(loginResponse: AuthenticationServiceResponseModel) {
     /** push new user state */
     const newUserState = Object.assign<{}, AuthenticationServiceModel>({}, {
-      isError: false,
-      errorMsg: '',
+      error: {
+        isError: false,
+        message: '',
+        source: undefined,
+      },
       isAuth: true,
       token: loginResponse.token,
       user: loginResponse.user,
@@ -140,8 +147,11 @@ export class AuthenticationService {
   private handleLogoutSuccessResponse() {
     /** push new user state */
     const newUserState = Object.assign<{}, AuthenticationServiceModel>({}, {
-      isError: false,
-      errorMsg: '',
+      error: {
+        source: undefined,
+        isError: false,
+        message: '',
+      },
       isAuth: false,
       token: '',
       user: undefined
@@ -170,8 +180,11 @@ export class AuthenticationService {
 
     /** push new user state */
     const newUserState = Object.assign<{}, AuthenticationServiceModel>({}, {
-      isError: isErr,
-      errorMsg: errMsg,
+      error: {
+        source: error,
+        isError: isErr,
+        message: errMsg,
+      },
       isAuth: false,
       token: '',
     })
@@ -182,10 +195,9 @@ export class AuthenticationService {
 
     /** compute return of method */
     const throwFn = () => { return `Login error when attempts to ${request.type}\nError was ${message}`; }
-    // const throwFn = () => { return `Login error`; }
 
     /** throw error only in login case, else return a null Observable */
-    return request.type === 'login' ? throwError(throwFn) : of(null);
+    return request.type === 'login' ? throwError(throwFn) : of();
   }
 
   /**
@@ -199,6 +211,18 @@ export class AuthenticationService {
       return httpErrorResponse.message;
     } else {
       return `${httpErrorResponse.error.message}`
+    }
+  }
+
+  private getError(err: any, request: TAUTHENTICATION_REQUEST): AuthenticationErrorModel {
+    const message = this.buildErrorMsg(err);
+    const isErr = (request.type === 'login' || request.type === 'signup') ? true : false;
+    const errMsg = (request.type === 'login' || request.type === 'signup') ? message : ''; /** App UI errors only for 'login', all errors show up in browser console */
+
+    return {
+      isError: isErr,
+      message: errMsg,
+      source: err
     }
   }
 }

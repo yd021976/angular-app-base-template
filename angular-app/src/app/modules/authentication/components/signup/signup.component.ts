@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
+import { AuthenticationController } from '../../controllers/authentication.controller';
 
 @Component({
   selector: 'authentication-signup',
@@ -6,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-
-  constructor() { }
+  public credentials: LoginCredentialsModel = { email: '', password: '' }
+  constructor(public ctrl: AuthenticationController) { }
 
   ngOnInit(): void {
   }

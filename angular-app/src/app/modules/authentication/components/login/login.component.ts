@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginCredentialsModel } from 'src/app/models/login.model';
+import { LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
 import { AuthenticationController } from '../../controllers/authentication.controller';
 
 @Component({
