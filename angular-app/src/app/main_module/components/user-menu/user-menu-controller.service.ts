@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/modules/authentication/services/authentication/authentication.service";
 
 @Injectable()
-export class UserMenuController {
+export class UserMenuControllerService {
     constructor(public authService: AuthenticationService, private router: Router) {
         this.authService.authInfos$.subscribe((status) => {
 

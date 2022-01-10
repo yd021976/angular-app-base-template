@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
 import { AuthenticationErrorModel, AuthenticationServiceModel, AuthenticationServiceResponseModel, LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
-import { AuthenticationRequest } from './authentication.request';
+import { AuthenticationRequestUtils } from './authentication-request.utils';
 import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_REQUEST } from '../../models/authentication.types';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class AuthenticationService {
   private readonly SIGNUP_URL: string = "/authentication/auth/signup"
 
   private config: TAUTHENTICATION_CONFIG;
-  private loginRequests: AuthenticationRequest;
+  private loginRequests: AuthenticationRequestUtils;
 
   /** Auth infos initial object state */
   private readonly AUTHINFOS_INIT: AuthenticationServiceModel = {
@@ -43,7 +43,7 @@ export class AuthenticationService {
       logout_url: this.LOGOUT_URL,
       signup_url: this.SIGNUP_URL
     }
-    this.loginRequests = new AuthenticationRequest(this.config, this.httpClient);
+    this.loginRequests = new AuthenticationRequestUtils(this.config, this.httpClient);
   }
 
 

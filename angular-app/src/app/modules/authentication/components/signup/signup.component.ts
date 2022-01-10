@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
-import { AuthenticationController } from '../../controllers/authentication.controller';
+import { AuthenticationComponentController } from '../../controllers/authentication-component-controller.service';
 
 @Component({
   selector: 'authentication-signup',
@@ -8,10 +8,16 @@ import { AuthenticationController } from '../../controllers/authentication.contr
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  public credentials: LoginCredentialsModel = { email: '', password: '' }
-  constructor(public ctrl: AuthenticationController) { }
+  constructor(public ctrl: AuthenticationComponentController) { }
 
   ngOnInit(): void {
   }
 
+  /**
+   * 
+   * @param credentials 
+   */
+  public submitForm(credentials: LoginCredentialsModel) {
+    this.ctrl.signup(credentials);
+  }
 }

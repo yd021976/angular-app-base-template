@@ -3,7 +3,7 @@ import { Observable, throwError } from "rxjs";
 import { LoginCredentialsModel, AuthenticationServiceResponseModel } from "src/app/modules/authentication/models/authentication.model";
 import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_BASE_REQUEST, TAUTHENTICATION_TYPE, TAUTHENTICATION_REQUEST } from "../../models/authentication.types";
 
-export class AuthenticationRequest {
+export class AuthenticationRequestUtils {
 
     /**
      * 

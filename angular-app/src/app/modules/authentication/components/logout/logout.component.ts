@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationController } from '../../controllers/authentication.controller';
+import { AuthenticationComponentController } from '../../controllers/authentication-component-controller.service';
 
 @Component({
   selector: 'authentication-logout',
@@ -8,7 +8,7 @@ import { AuthenticationController } from '../../controllers/authentication.contr
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(public ctrl:AuthenticationController) { }
+  constructor(public ctrl:AuthenticationComponentController) { }
 
   ngOnInit(): void {
   }

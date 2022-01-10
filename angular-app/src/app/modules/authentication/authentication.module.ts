@@ -5,13 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Module components
-import { LoginComponent } from './components/login/login.component';
-
-// Module providers
-import { AuthenticationService } from 'src/app/modules/authentication/services/authentication/authentication.service';
-import { AuthenticationController } from './controllers/authentication.controller';
-
 // PrimeNG modules
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,11 +12,23 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+
+// Module components
+import { LoginComponent } from './components/login/login.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-// End of imports
+
+// Module providers
+import { AuthenticationService } from 'src/app/modules/authentication/services/authentication/authentication.service';
+import { AuthenticationComponentController } from './controllers/authentication-component-controller.service';
+import { CredentialsFormComponent } from './components/credentials-form/credentials-form.component';
+
+/*********************************************************************************************************************************************************************************************************
+ *                                                                        end of imports
+ ********************************************************************************************************************************************************************************************************/
+
 
 
 @NgModule({
@@ -32,7 +37,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     AuthenticationComponent,
     LogoutComponent,
     SignupComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CredentialsFormComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +48,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
       {
         path: 'authentication',
         component: AuthenticationComponent,
-      }
+      },
     ]),
     FormsModule,
     PasswordModule,
@@ -51,7 +57,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     MessagesModule, MessageModule
   ],
   providers: [
-    AuthenticationController,
+    AuthenticationComponentController,
     AuthenticationService
   ],
   exports: [RouterModule]

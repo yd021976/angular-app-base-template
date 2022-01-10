@@ -1,4 +1,4 @@
-import { UserModel } from "../../../models/user.model";
+import { UserModel } from "../../user/models/user.model";
 import { TAUTHENTICATION_REQUEST, TAUTHENTICATION_TYPE } from "./authentication.types";
 
 export interface AuthenticationErrorModel {

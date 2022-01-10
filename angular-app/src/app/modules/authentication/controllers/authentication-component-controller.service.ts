@@ -5,7 +5,7 @@ import { AuthenticationService } from "src/app/modules/authentication/services/a
 
 
 @Injectable()
-export class AuthenticationController {
+export class AuthenticationComponentController {
     constructor(public authService: AuthenticationService, protected router: Router) {
     }
 

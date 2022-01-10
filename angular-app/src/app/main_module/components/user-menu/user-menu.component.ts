@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { UserMenuController } from './user-menu.controller';
+import { UserMenuControllerService } from './user-menu-controller.service';
 
 @Component({
   selector: 'app-user-menu',
@@ -9,7 +9,7 @@ import { UserMenuController } from './user-menu.controller';
 })
 export class UserMenuComponent implements OnInit {
   public menuItems: MenuItem[] = []
-  constructor(public ctrl: UserMenuController) { }
+  constructor(public ctrl: UserMenuControllerService) { }
 
   ngOnInit(): void {
     this.menuItems = [

@@ -3,12 +3,8 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-/** Feature modules */
-import { AuthenticationModule } from '../modules/authentication/authentication.module';
-
-/** Routing modules */
-import { AppRoutingModule } from './app-routing.module';
-
+/** Libraries imports */
+import { map } from 'rxjs';
 
 /** PrimeNG modules */
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -16,7 +12,14 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 
-/** module components */
+/** Feature modules */
+import { AuthenticationModule } from '../modules/authentication/authentication.module';
+import { UserModule } from '../modules/user/user.module';
+
+/** Routing modules */
+import { AppRoutingModule } from './app-routing.module';
+
+/** Module components */
 import { HomeComponent } from './components/home/home.component';
 import { AppComponent } from './components/main_app/app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -27,12 +30,13 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 /** module directives */
 import { ActiveItemWorkaroundDirective } from '../directives/primeng-tabmenu-fix.directive';
 
-/** components controllers */
-import { UserMenuController } from './components/user-menu/user-menu.controller';
+/** Components controllers & services */
+import { UserMenuControllerService } from './components/user-menu/user-menu-controller.service';
 import { AuthenticationService } from '../modules/authentication/services/authentication/authentication.service';
-import { map, Observable, tap } from 'rxjs';
-// end of imports
 
+/*********************************************************************************************************************************************************************************************************
+ *                                                                        end of imports
+ ********************************************************************************************************************************************************************************************************/
 
 @NgModule({
   declarations: [
@@ -54,9 +58,12 @@ import { map, Observable, tap } from 'rxjs';
     MenuModule,
     ButtonModule,
     ToolbarModule,
+
     /** Feature modules */
     AuthenticationModule,
-    /** Routing modules */
+    UserModule,
+
+    /** Main routing module */
     AppRoutingModule, /** SHOULD be the last one because of route order "child routes" should never be matched (@see https://angular.io/guide/router#route-order) */
   ],
   providers: [
@@ -65,8 +72,8 @@ import { map, Observable, tap } from 'rxjs';
 
     /** components controllers */
     {
-      provide: UserMenuController,
-      useClass: UserMenuController,
+      provide: UserMenuControllerService,
+      useClass: UserMenuControllerService,
       multi: false,
       deps: [AuthenticationService]
     },

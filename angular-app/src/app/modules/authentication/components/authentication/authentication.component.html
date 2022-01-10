@@ -1,6 +1,26 @@
-<div *ngIf="(!(ctrl.authService.authInfos$|async)?.isAuth) || true">
-    <authentication-login></authentication-login>
-</div>
+<!-- if user is already logged in, show user profile data & logout component -->
 <div *ngIf="(ctrl.authService.authInfos$|async)?.isAuth || false">
     <authentication-logout></authentication-logout>
+</div>
+
+<!-- if not logged in and not signup is not requested, show login component  -->
+<div *ngIf="((!(ctrl.authService.authInfos$|async)?.isAuth) && !isSignup)">
+    <div>
+        <authentication-login></authentication-login>
+    </div>
+    <div class="flex justify-content-start align-items-center">
+        <div class="flex">Do not have an account ? Create a new one</div>
+        <p-button class="flex" styleClass="p-button-link" label="here" (onClick)="toggleSignup()"></p-button>
+    </div>
+</div>
+
+<!-- Show signup component -->
+<div *ngIf="isSignup">
+    <div>
+        <authentication-signup></authentication-signup>
+    </div>
+    <div class="flex justify-content-start align-items-center">
+        <div class="flex">Already have an account ? Login</div>
+        <p-button class="flex" styleClass="p-button-link" label="here" (click)="toggleSignup()"></p-button>
+    </div>
 </div>
