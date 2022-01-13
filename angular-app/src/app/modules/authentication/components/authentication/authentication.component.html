@@ -8,9 +8,10 @@
     <div>
         <authentication-login></authentication-login>
     </div>
-    <div class="flex justify-content-start align-items-center">
-        <div class="flex">Do not have an account ? Create a new one</div>
-        <p-button class="flex" styleClass="p-button-link" label="here" (onClick)="toggleSignup()"></p-button>
+    <div class="flex">
+        <div class="flex justify-content-start align-items-center">Do not have an account ? Create a new one</div>
+        <p-button class="flex inline-button" styleClass="p-button-link" label="here" (onClick)="toggleSignup()">
+        </p-button>
     </div>
 </div>
 
@@ -21,6 +22,7 @@
     </div>
     <div class="flex justify-content-start align-items-center">
         <div class="flex">Already have an account ? Login</div>
-        <p-button class="flex" styleClass="p-button-link" label="here" (click)="toggleSignup()"></p-button>
+        <p-button class="flex inline-button" styleClass="p-button-link" label="here" (click)="toggleSignup()">
+        </p-button>
     </div>
 </div>

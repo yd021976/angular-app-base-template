@@ -175,16 +175,11 @@ export class AuthenticationService {
   protected httpErrorHandler(request: TAUTHENTICATION_REQUEST, error: any) {
     /** compute error states */
     const message = this.buildErrorMsg(error);
-    const isErr = request.type === 'login' ? true : false; /** App UI errors only for 'login', all errors show up in browser console */
-    const errMsg = request.type === 'login' ? message : ''; /** App UI errors only for 'login', all errors show up in browser console */
+    const err = this.getError(error,request);
 
     /** push new user state */
     const newUserState = Object.assign<{}, AuthenticationServiceModel>({}, {
-      error: {
-        source: error,
-        isError: isErr,
-        message: errMsg,
-      },
+      error: err,
       isAuth: false,
       token: '',
     })

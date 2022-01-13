@@ -1,0 +1,8 @@
+.inline-button {
+    .p-button {
+        &::before {
+            content: "\a0";
+        }
+        padding-left: 0px;
+    }
+}

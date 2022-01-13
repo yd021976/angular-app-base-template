@@ -54,7 +54,7 @@ import { CredentialsFormComponent } from './components/credentials-form/credenti
     PasswordModule,
     InputTextModule,
     ButtonModule,
-    MessagesModule, MessageModule
+    MessagesModule, MessageModule,
   ],
   providers: [
     AuthenticationComponentController,
