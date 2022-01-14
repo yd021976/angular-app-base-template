@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { LoginCredentialsModel, AuthenticationServiceResponseModel } from "src/app/modules/authentication/models/authentication.model";
+import { credentialsModel, AuthenticationServiceResponseModel } from "src/app/modules/authentication/models/authentication.model";
 import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_BASE_REQUEST, TAUTHENTICATION_TYPE, TAUTHENTICATION_REQUEST } from "../../models/authentication.types";
 
 export class AuthenticationRequestUtils {
@@ -48,11 +48,16 @@ export class AuthenticationRequestUtils {
     * @param credentials The user login/password to login
     * @returns An `observable` of type `LoginServiceResponseModel`
     */
-    public prepareLoginRequest(credentials: LoginCredentialsModel): TAUTHENTICATION_REQUEST {
+    public prepareLoginRequest(credentials: credentialsModel): TAUTHENTICATION_REQUEST {
         const method: string = 'POST';
         const url: string = this.buildURL(this.config.login_url);
         const logintype: TAUTHENTICATION_TYPE = 'login'
-        const req: TAUTHENTICATION_BASE_REQUEST = this.httpClient.request<AuthenticationServiceResponseModel>(method, url, { body: credentials });
+        const req: TAUTHENTICATION_BASE_REQUEST = this.httpClient.request<AuthenticationServiceResponseModel>(method, url, {
+            body: {
+                email: credentials.email,
+                password: credentials.password
+            }
+        });
 
         /** Return the observable httpclient request to execute */
         return {
@@ -92,7 +97,7 @@ export class AuthenticationRequestUtils {
      * 
      * @param credentials 
      */
-    public prepareSignupRequest(credentials: LoginCredentialsModel): TAUTHENTICATION_REQUEST {
+    public prepareSignupRequest(credentials: credentialsModel): TAUTHENTICATION_REQUEST {
         const url = this.buildURL(this.config.signup_url);
         const method = 'POST';
         const params = { body: credentials }

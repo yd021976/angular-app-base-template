@@ -43,6 +43,10 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
    * 
    */
   toggleSignup() {
+    // Clear current errors
+    this.ctrl.clearErrors();
+
+    // toggle signup/login form display
     this.isSignup = !this.isSignup;
   }
 

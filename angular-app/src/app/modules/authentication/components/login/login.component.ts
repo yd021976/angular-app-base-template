@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
+import { credentialsModel } from 'src/app/modules/authentication/models/authentication.model';
 import { AuthenticationComponentController } from '../../controllers/authentication-component-controller.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthenticationComponentController } from '../../controllers/authenticat
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public credentials: LoginCredentialsModel = { email: '', password: '' }
+  public credentials: credentialsModel = { email: '', password: '' }
   /**
    * 
    * @param ctrl 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
    * 
    * @param credentials 
    */
-  public submitForm(credentials: LoginCredentialsModel) {
+  public submitForm(credentials: credentialsModel) {
     this.ctrl.login(credentials);
   }
 }

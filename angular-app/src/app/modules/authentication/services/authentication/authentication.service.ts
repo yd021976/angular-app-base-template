@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
-import { AuthenticationErrorModel, AuthenticationServiceModel, AuthenticationServiceResponseModel, LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
+import { AuthenticationErrorModel, AuthenticationServiceModel, AuthenticationServiceResponseModel, credentialsModel } from 'src/app/modules/authentication/models/authentication.model';
 import { AuthenticationRequestUtils } from './authentication-request.utils';
 import { TAUTHENTICATION_CONFIG, TAUTHENTICATION_REQUEST } from '../../models/authentication.types';
 
@@ -46,7 +46,24 @@ export class AuthenticationService {
     this.loginRequests = new AuthenticationRequestUtils(this.config, this.httpClient);
   }
 
+  /**
+   * clear current errors
+   */
+  public clearCurrentErrors() {
+    const currentVal = this.authInfos$.value;
+    const newState:AuthenticationServiceModel = {
+      isAuth:currentVal.isAuth,
+      token:currentVal.token,
+      user:currentVal.user,
+      error: {
+        isError: false,
+        message: '',
+        source: undefined,
+      }
+    };
 
+    this.authInfos$.next(newState);
+  }
   /**
    * Attempts to autologin with browser localstorage stored token
    */
@@ -70,7 +87,7 @@ export class AuthenticationService {
    * @returns New login state as `Observable`
    * @throws Error if request login type is `login`
    */
-  public login(credentials: LoginCredentialsModel): Observable<AuthenticationServiceModel> {
+  public login(credentials: credentialsModel): Observable<AuthenticationServiceModel> {
     const req = this.loginRequests.prepareLoginRequest(credentials);
 
     return req.request.pipe(
@@ -85,7 +102,7 @@ export class AuthenticationService {
   /**
    * 
    */
-  public signup(credentials: LoginCredentialsModel): Observable<AuthenticationServiceModel> {
+  public signup(credentials: credentialsModel): Observable<AuthenticationServiceModel> {
     const req = this.loginRequests.prepareSignupRequest(credentials);
     return req.request.pipe(
       catchError(this.httpErrorHandler.bind(this, req)),
@@ -175,7 +192,7 @@ export class AuthenticationService {
   protected httpErrorHandler(request: TAUTHENTICATION_REQUEST, error: any) {
     /** compute error states */
     const message = this.buildErrorMsg(error);
-    const err = this.getError(error,request);
+    const err = this.getError(error, request);
 
     /** push new user state */
     const newUserState = Object.assign<{}, AuthenticationServiceModel>({}, {
@@ -191,9 +208,18 @@ export class AuthenticationService {
     /** compute return of method */
     const throwFn = () => { return `Login error when attempts to ${request.type}\nError was ${message}`; }
 
-    /** throw error only in login case, else return a null Observable */
-    return request.type === 'login' ? throwError(throwFn) : of();
+    /** throw error only in login/signup case, else return an empty Observable */
+    switch (request.type) {
+      case 'login':
+      case 'signup':
+        throwError(throwFn)
+        break;
+      default:
+        break;
+    }
+    return of();
   }
+
 
   /**
   * Format error message
@@ -209,6 +235,13 @@ export class AuthenticationService {
     }
   }
 
+
+  /**
+   * Compute `error` depending `request.type`
+   * @param err 
+   * @param request 
+   * @returns 
+   */
   private getError(err: any, request: TAUTHENTICATION_REQUEST): AuthenticationErrorModel {
     const message = this.buildErrorMsg(err);
     const isErr = (request.type === 'login' || request.type === 'signup') ? true : false;
@@ -220,4 +253,5 @@ export class AuthenticationService {
       source: err
     }
   }
+
 }

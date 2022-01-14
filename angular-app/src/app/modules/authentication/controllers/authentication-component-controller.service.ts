@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { map } from "rxjs";
-import { LoginCredentialsModel, AuthenticationServiceModel } from "src/app/modules/authentication/models/authentication.model";
+import { credentialsModel, AuthenticationServiceModel } from "src/app/modules/authentication/models/authentication.model";
 import { AuthenticationService } from "src/app/modules/authentication/services/authentication/authentication.service";
 
 
@@ -10,10 +9,13 @@ export class AuthenticationComponentController {
     constructor(public authService: AuthenticationService, protected router: Router) {
     }
 
+    clearErrors(){
+        this.authService.clearCurrentErrors()
+    }
     /**
      * 
      */
-    public login(credentials: LoginCredentialsModel) {
+    public login(credentials: credentialsModel) {
         const sub = this.authService.login(credentials).subscribe((auth) => {
             this.afterLoginOrSignup(auth);
             sub.unsubscribe();
@@ -33,7 +35,7 @@ export class AuthenticationComponentController {
      * 
      * @param credentials 
      */
-    public signup(credentials: LoginCredentialsModel) {
+    public signup(credentials: credentialsModel) {
         const sub = this.authService.signup(credentials).subscribe((auth) => {
             this.afterLoginOrSignup(auth);
             sub.unsubscribe();

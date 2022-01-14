@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginCredentialsModel } from 'src/app/modules/authentication/models/authentication.model';
+import { credentialsModel } from 'src/app/modules/authentication/models/authentication.model';
 import { AuthenticationComponentController } from '../../controllers/authentication-component-controller.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit {
    * 
    * @param credentials 
    */
-  public submitForm(credentials: LoginCredentialsModel) {
+  public submitForm(credentials: credentialsModel) {
     this.ctrl.signup(credentials);
   }
 }

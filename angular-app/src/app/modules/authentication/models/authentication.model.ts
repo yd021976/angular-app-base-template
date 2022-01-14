@@ -1,5 +1,4 @@
 import { UserModel } from "../../user/models/user.model";
-import { TAUTHENTICATION_REQUEST, TAUTHENTICATION_TYPE } from "./authentication.types";
 
 export interface AuthenticationErrorModel {
     isError: boolean
@@ -7,9 +6,10 @@ export interface AuthenticationErrorModel {
     source?: Error
 }
 
-export interface LoginCredentialsModel {
+export interface credentialsModel {
     email: string
     password: string
+    nickname?:string // Optionnal, use for signup
 }
 
 export interface AuthenticationServiceModel {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthenticationServiceModel, LoginCredentialsModel } from '../../models/authentication.model';
+import { AuthenticationServiceModel, credentialsModel } from '../../models/authentication.model';
 
 @Component({
   selector: 'authentication-credentials-form',
@@ -9,9 +9,10 @@ import { AuthenticationServiceModel, LoginCredentialsModel } from '../../models/
 })
 export class CredentialsFormComponent implements OnInit {
   @Input() authInfos$!: Observable<AuthenticationServiceModel>
-  @Input() submitLabel:string = 'Login'
-  @Output() submit: EventEmitter<LoginCredentialsModel> = new EventEmitter()
-  public credentials: LoginCredentialsModel = { email: '', password: '' }
+  @Input() submitLabel: string = 'Login'
+  @Input() credentialsType:'login' | 'signup' = 'login'
+  @Output() submit: EventEmitter<credentialsModel> = new EventEmitter()
+  public credentials: credentialsModel = { email: '', password: '', nickname: '' }
 
   constructor() { }
 
